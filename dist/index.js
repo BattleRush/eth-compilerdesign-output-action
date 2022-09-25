@@ -9669,238 +9669,7 @@ const core = __nccwpck_require__(8864);
 const github = __nccwpck_require__(6366);
 
 try {
-    const makeOutput = `make test -C ./hw1-pre
-    make[1]: Entering directory '/home/runner/work/ETH-CompilerDesignProject/ETH-CompilerDesignProject/hw1-pre'
-    ocamlbuild -Is util -libs unix,str main.native
-    /home/runner/.opam/4.06.0/bin/ocamldep.opt -modules main.ml > main.ml.depends
-    /home/runner/.opam/4.06.0/bin/ocamldep.opt -modules util/assert.ml > util/assert.ml.depends
-    /home/runner/.opam/4.06.0/bin/ocamldep.opt -modules gradedtests.ml > gradedtests.ml.depends
-    /home/runner/.opam/4.06.0/bin/ocamlc.opt -c -I util -o util/assert.cmo util/assert.ml
-    /home/runner/.opam/4.06.0/bin/ocamldep.opt -modules hellocaml.ml > hellocaml.ml.depends
-    /home/runner/.opam/4.06.0/bin/ocamlc.opt -c -I util -o hellocaml.cmo hellocaml.ml
-    /home/runner/.opam/4.06.0/bin/ocamldep.opt -modules providedtests.ml > providedtests.ml.depends
-    /home/runner/.opam/4.06.0/bin/ocamlc.opt -c -I util -o gradedtests.cmo gradedtests.ml
-    /home/runner/.opam/4.06.0/bin/ocamlc.opt -c -I util -o providedtests.cmo providedtests.ml
-    /home/runner/.opam/4.06.0/bin/ocamlc.opt -c -I util -o main.cmo main.ml
-    /home/runner/.opam/4.06.0/bin/ocamlopt.opt -c -I util -o util/assert.cmx util/assert.ml
-    /home/runner/.opam/4.06.0/bin/ocamlopt.opt -c -I util -o hellocaml.cmx hellocaml.ml
-    /home/runner/.opam/4.06.0/bin/ocamlopt.opt -c -I util -o gradedtests.cmx gradedtests.ml
-    /home/runner/.opam/4.06.0/bin/ocamlopt.opt -c -I util -o providedtests.cmx providedtests.ml
-    /home/runner/.opam/4.06.0/bin/ocamlopt.opt -c -I util -o main.cmx main.ml
-    /home/runner/.opam/4.06.0/bin/ocamlopt.opt unix.cmxa str.cmxa -I util hellocaml.cmx util/assert.cmx gradedtests.cmx providedtests.cmx main.cmx -o main.native
-    ./main.native --test
-    Running test Student-Provided Tests For Problem 1-3
-    
-    Student-Provided Tests For Problem 1-3:
-      OK
-    Karlo Problem 4-4:
-      OK
-    Karlo Problem 4-5:
-      OK
-    Karlo Problem5:
-      OK
-    Problem1-1 (3/3 points):
-      OK
-    Problem1-2 (3/3 points):
-      OK
-    Problem1-3 (?/3 points):
-      Hidden
-    Problem2-1 (3/3 points):
-      OK
-    Problem2-2 (3/3 points):
-      OK
-    Problem3-1 (5/5 points):
-      OK
-    Problem3-2 (5/5 points):
-      OK
-    Problem3-3 (5/5 points):
-      OK
-    Problem3-4 (5/5 points):
-      OK
-    Problem3-5 (5/5 points):
-      OK
-    Problem3-6 (5/5 points):
-      OK
-    Problem4-1 (5/5 points):
-      OK
-    Running test Karlo Problem 4-4
-    Running test Karlo Problem 4-5
-    Running test Karlo Problem5
-    Running test Problem1-1
-    Running test Problem1-2
-    Running test Problem1-3
-    Running test Problem2-1
-    Running test Problem2-2
-    Running test Problem3-1
-    Running test Problem3-2
-    Running test Problem3-3
-    Running test Problem3-4
-    Running test Problem3-5
-    Running test Problem3-6
-    Running test Problem4-1
-    Running test Problem4-2
-    Running test Problem4-3
-    Running test Problem4-4
-    Running test Problem4-4harder
-    Running test Problem4-5
-    Running test Problem4-5harder
-    Running test Problem4-5hardest
-    Running test Problem5
-    Problem4-2 (5/5 points):
-      OK
-    Problem4-3 (5/5 points):
-      OK
-    Problem4-4 (5/5 points):
-      OK
-    Problem4-4harder (?/5 points):
-      Hidden
-    Problem4-5 (5/5 points):
-      OK
-    Problem4-5harder (?/5 points):
-      Hidden
-    Problem4-5hardest (?/5 points):
-      Hidden
-    Problem5 (?/15 points):
-      Hidden
-    ---------------------------------------------------
-    Passed: 75/75
-    Failed: 0/75
-    Score: 67/67 (given)
-           ?/33 (hidden)
-    make[1]: Leaving directory '/home/runner/work/ETH-CompilerDesignProject/ETH-CompilerDesignProject/hw1-pre'
-    make test -C ./hw2-pre
-    make[1]: Entering directory '/home/runner/work/ETH-CompilerDesignProject/ETH-CompilerDesignProject/hw2-pre'
-    ocamlbuild -use-ocamlfind -Is util,grading,x86 -libs unix,str,nums main.native #  -> removed
-    ocamlfind ocamldep -modules main.ml > main.ml.depends
-    ocamlfind ocamldep -modules util/assert.mli > util/assert.mli.depends
-    ocamlfind ocamldep -modules gradedtests.ml > gradedtests.ml.depends
-    ocamlfind ocamlc -c -I util -I x86 -o util/assert.cmi util/assert.mli
-    ocamlfind ocamldep -modules simulator.ml > simulator.ml.depends
-    ocamlfind ocamldep -modules x86/x86.ml > x86/x86.ml.depends
-    ocamlfind ocamlc -c -I x86 -I util -o x86/x86.cmo x86/x86.ml
-    ocamlfind ocamlc -c -I x86 -I util -o simulator.cmo simulator.ml
-    + ocamlfind ocamlc -c -I x86 -I util -o simulator.cmo simulator.ml
-    File "simulator.ml", line 189, characters 10-22:
-    Warning 26: unused variable progress_Rip.
-    File "simulator.ml", line 224, characters 12-22:
-    Warning 26: unused variable get_cc_val.
-    File "simulator.ml", line 227, characters 12-19:
-    Warning 26: unused variable cc_list.
-    File "simulator.ml", line 414, characters 6-15:
-    Warning 26: unused variable main_elem.
-    File "simulator.ml", line 418, characters 6-18:
-    Warning 26: unused variable text_seg_fun.
-    File "simulator.ml", line 423, characters 6-21:
-    Warning 26: unused variable is_text_segment.
-    ocamlfind ocamldep -modules studenttests.ml > studenttests.ml.depends
-    ocamlfind ocamlc -c -I x86 -I util -o gradedtests.cmo gradedtests.ml
-    ocamlfind ocamlc -c -I x86 -I util -o studenttests.cmo studenttests.ml
-    ocamlfind ocamlc -c -I x86 -I util -o main.cmo main.ml
-    ocamlfind ocamldep -modules util/assert.ml > util/assert.ml.depends
-    ocamlfind ocamlopt -c -I util -I x86 -o util/assert.cmx util/assert.ml
-    ocamlfind ocamlopt -c -I x86 -I util -o x86/x86.cmx x86/x86.ml
-    ocamlfind ocamlopt -c -I x86 -I util -o simulator.cmx simulator.ml
-    + ocamlfind ocamlopt -c -I x86 -I util -o simulator.cmx simulator.ml
-    File "simulator.ml", line 189, characters 10-22:
-    Warning 26: unused variable progress_Rip.
-    File "simulator.ml", line 224, characters 12-22:
-    Warning 26: unused variable get_cc_val.
-    File "simulator.ml", line 227, characters 12-19:
-    Warning 26: unused variable cc_list.
-    File "simulator.ml", line 414, characters 6-15:
-    Warning 26: unused variable main_elem.
-    File "simulator.ml", line 418, characters 6-18:
-    Warning 26: unused variable text_seg_fun.
-    File "simulator.ml", line 423, characters 6-21:
-    Warning 26: unused variable is_text_segment.
-    ocamlfind ocamlopt -c -I x86 -I util -o gradedtests.cmx gradedtests.ml
-    ocamlfind ocamlopt -c -I x86 -I util -o studenttests.cmx studenttests.ml
-    ocamlfind ocamlopt -c -I x86 -I util -o main.cmx main.ml
-    ocamlfind ocamlopt unix.cmxa str.cmxa nums.cmxa -linkpkg -I x86 -I util x86/x86.cmx simulator.cmx util/assert.cmx gradedtests.cmx studenttests.cmx main.cmx -o main.native
-    ./main.native --test
-    Running test Debug
-    Running test Map Addresses
-    Running test Condition Codes
-    Running test Easy Assemble Tests
-    Running test Easy Load Tests
-    Running test Medium Assemble Tests
-    Running test Medium Load Tests
-    Running test Functionality Tests
-    Running test Hidden Functionality Tests
-    Running test Instruction Tests
-    Running test Hidden Instruction Tests
-    Running test Condition Flag Set Tests
-    Running test Hidden Condition Flag Set Tests
-    Running test End-to-end Factorial
-    
-    Running test Hidden End-to-end Hard
-    Debug:
-      Hidden
-    Map Addresses (2/2 points):
-      OK
-    Condition Codes (3/3 points):
-      OK
-    Easy Assemble Tests (2/5 points)
-    passed - assemble1
-    FAILED - assemble2: not equal
-    Easy Load Tests (0/5 points)
-    FAILED - load_flags: load unimplemented
-    FAILED - load_rip: load unimplemented
-    FAILED - load_rsp: load unimplemented
-    Medium Assemble Tests (0/5 points)
-    FAILED - assemble1: not equal
-    FAILED - assemble2: Should have raised Undefined_sym
-    FAILED - assemble3: not equal
-    FAILED - assemble4: Should have raised Undefined_sym
-    Medium Load Tests (0/5 points)
-    FAILED - load_exit_addr: load unimplemented
-    Functionality Tests (3/3 points):
-      OK
-    Hidden Functionality Tests (?/2 points):
-      Hidden
-    Instruction Tests (5/5 points):
-      OK
-    Hidden Instruction Tests (?/5 points):
-      Hidden
-    Condition Flag Set Tests (1/3 points)
-    FAILED - cc_add_1: expected OF:false SF:false ZF:true
-    FAILED - cc_add_2: expected OF:false SF:true ZF:false
-    FAILED - cc_add_3: expected OF:true SF:true ZF:false
-    FAILED - cc_add_4: expected OF:true SF:false ZF:false
-    FAILED - cc_neg_1: expected OF:true SF:true ZF:false
-    FAILED - cc_neg_2: expected OF:false SF:true ZF:false
-    FAILED - cc_cmp_1: expected OF:true SF:true ZF:false
-    FAILED - cc_cmp_2: expected OF:false SF:true ZF:false
-    FAILED - cc_imul_1: expected OF:false
-    FAILED - cc_and: expected OF:false SF:false ZF:true
-    FAILED - cc_or: expected OF:false SF:false ZF:false
-    passed - cc_push
-    passed - cc_pop
-    passed - cc_set
-    passed - cc_ret
-    passed - cc_mov
-    passed - cc_jmp
-    passed - cc_jmp
-    passed - cc_jmp
-    passed - cc_call
-    passed - cc_lea
-    Hidden Condition Flag Set Tests (?/2 points):
-      Hidden
-    End-to-end Factorial (0/10 points)
-    FAILED - fact6: load unimplemented
-    Hidden End-to-end Hard (?/20 points):
-      Hidden
-    ---------------------------------------------------
-    Passed: 35/56
-    Failed: 21/56
-    Score: 17/46 (given)
-           ?/29 (hidden)
-    make[1]: Leaving directory '/home/runner/work/ETH-CompilerDesignProject/ETH-CompilerDesignProject/hw2-pre'
-    `;
-
-    const nameToGreet = core.getInput('who-to-greet');
-
-    console.log(`Hello ${nameToGreet}!`);
+    const makeOutput = core.getInput('make-output');
 
     var projectResults = [];
     var tests = makeOutput.split('./main.native --test');
@@ -9950,6 +9719,7 @@ try {
             if (line.startsWith('Failed:')) {
                 continue;
             }
+            
             if (line.startsWith('Score:')) {
                 var score = parseInt(line.split(':')[1].split('(')[0].split('/')[0])
                 var maxScore = parseInt(line.split(':')[1].split('(')[0].split('/')[1]);
@@ -9957,6 +9727,7 @@ try {
                 currentProject.maxScore = maxScore;
                 continue;
             }
+
             if (line.endsWith('(hidden)')) {
                 projectResults.push(currentProject);
                 break;
@@ -10041,11 +9812,9 @@ try {
         }
     }
 
-    var json = JSON.stringify(projectResults, null, 2);
-    console.log(`JSON`);
-    console.log(json);
-
-
+    //var json = JSON.stringify(projectResults, null, 2);
+    //console.log(`JSON`);
+    //console.log(json);
 
     var markdown = `# Test Results`
 
@@ -10088,17 +9857,16 @@ try {
                     var subTestFailResult = subTest.passed ? '' : ':x:';
 
                     var subTestMessage = subTest.passed ? '' : subTest.message;
-                    markdown += `|  - ${subTest.name} | | ${subTestPassResult} | ${subTestFailResult} | ${subTestMessage} |\n`;
+                    markdown += `|   - ${subTest.name} | | ${subTestPassResult} | ${subTestFailResult} | ${subTestMessage} |\n`;
                 }
             }
         }
     }
 
 
-
-    core.setOutput("time", markdown);
+    core.setOutput("markdown", markdown);
     // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
+    //const payload = JSON.stringify(github.context.payload, undefined, 2)
     //console.log(`The event payload: ${payload}`);
 } catch (error) {
     core.setFailed(error.message);
