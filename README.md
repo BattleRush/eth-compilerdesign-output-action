@@ -104,15 +104,6 @@ jobs:
     - run: opam install ocamlbuild
     - run: opam install menhir
     - run: opam install num 
-    
-    # Show opam env
-    - name: Eval opam env
-      run: opam env
-      
-    - name: Run ocamlbuild
-      run: |
-        eval $(opam env)
-        ocamlbuild
 
     - name: Run make
       id: maketest
