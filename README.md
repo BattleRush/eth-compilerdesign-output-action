@@ -79,7 +79,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: /home/runner/.opam
-        key: ${{ runner.os }}-opam
+        key: ${{ runner.os }}-opam-4.13.1
 
     - name: Cache LLVM
       id: cache-llvm
