@@ -129,3 +129,8 @@ jobs:
     - name: Get the output markdown
       run: echo "${{ steps.outputparser.outputs.markdown }}" >> $GITHUB_STEP_SUMMARY
 ```
+
+
+# Example output 
+
+![image](https://user-images.githubusercontent.com/11750584/192164630-81c79b99-e0b1-4829-a712-9c1bd750a3a6.png)
