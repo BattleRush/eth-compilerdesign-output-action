@@ -43,7 +43,7 @@ try {
 
                 // TODO Remove soon
                 console.log("Line: " + line);
-                
+
                 if (line.startsWith('Running test')) {
                     continue;
                 }
@@ -129,6 +129,9 @@ try {
                     continue;
                 }
 
+                // TODO Check this case
+                if(!currentTest)
+                    continue;
 
                 if (line.startsWith('FAILED')) {
                     var name = line.split(':')[0].split('-')[1].trim();
