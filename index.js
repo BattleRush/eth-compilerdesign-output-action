@@ -1,8 +1,11 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const fs = require('fs')
 
 try {
-    const makeOutput = core.getInput('make-output');
+    const makeOutputFile = core.getInput('make-output');
+    let makeOutput = fs.readFile(makeOutputFile, 'utf8')
+
     console.log("Received input: " + makeOutput);
 
     var projectResults = [];

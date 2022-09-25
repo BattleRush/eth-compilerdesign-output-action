@@ -9667,9 +9667,12 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(8864);
 const github = __nccwpck_require__(6366);
+const fs = __nccwpck_require__(7147)
 
 try {
-    const makeOutput = core.getInput('make-output');
+    const makeOutputFile = core.getInput('make-output');
+    let makeOutput = fs.readFile(makeOutputFile, 'utf8')
+
     console.log("Received input: " + makeOutput);
 
     var projectResults = [];
