@@ -9670,6 +9670,7 @@ const github = __nccwpck_require__(6366);
 
 try {
     const makeOutput = core.getInput('make-output');
+    console.log("Received input: " + makeOutput);
 
     var projectResults = [];
     var tests = makeOutput.split('./main.native --test');
@@ -9719,7 +9720,7 @@ try {
             if (line.startsWith('Failed:')) {
                 continue;
             }
-            
+
             if (line.startsWith('Score:')) {
                 var score = parseInt(line.split(':')[1].split('(')[0].split('/')[0])
                 var maxScore = parseInt(line.split(':')[1].split('(')[0].split('/')[1]);
@@ -9825,6 +9826,9 @@ try {
         markdown += `Passed: ${project.passed}\n`;
         markdown += `Failed: ${project.failed}\n`;
 
+        // Make the table collapsable
+        markdown += `<details><summary>Test details</summary>\n\n`;
+
         // Create markdown table for each test
         markdown += `| Test | Score | Passed | Failed | Result |\n`;
         markdown += `| ---- | ----- | ------ | ------ | ------ |\n`;
@@ -9861,6 +9865,8 @@ try {
                 }
             }
         }
+
+        markdown += `</details>\n\n`;
     }
 
 
