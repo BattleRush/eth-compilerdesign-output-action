@@ -9742,6 +9742,14 @@ try {
                 }
 
                 if (line.endsWith('(hidden)')) {
+                    continue;
+                }
+
+                if(line.indexOf('Leaving directory') == 0) {
+                    // Set the project name to the name of the folder
+                    var projectName = line.substring(line.lastIndexOf('/') + 1, line.lastIndexOf('\''));
+                    currentProject.name = projectName;
+
                     projectResults.push(currentProject);
                     break;
                 }
@@ -9799,6 +9807,8 @@ try {
                         passed: false,
                         message: message
                     });
+
+                    currentTest.passed += 1;
                     continue;
                 }
                 if (line.startsWith('passed')) {
@@ -9809,6 +9819,8 @@ try {
                         passed: true,
                         message: ''
                     });
+                    
+                    currentTest.failed += 1;
                     continue;
                 }
 
@@ -9834,7 +9846,9 @@ try {
         for (var i = 0; i < projectResults.length; i++) {
             var project = projectResults[i];
             markdown += `\n\n## ${project.name}\n\n`;
-            markdown += `${project.name} (${project.score}/${project.maxScore})\n`;
+            // Round project score percent to 2 decimal places
+            var projectScorePercent = Math.round((project.score / project.maxScore) * 10000) / 100;
+            markdown += `Score ${project.score} of ${project.maxScore} (${projectScorePercent}%)\n`;
             markdown += `Passed: ${project.passed}\n`;
             markdown += `Failed: ${project.failed}\n`;
 
