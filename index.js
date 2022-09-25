@@ -78,7 +78,7 @@ try {
                     continue;
                 }
 
-                if(line.indexOf('Leaving directory') == 0) {
+                if(line.indexOf('Leaving directory') > -1) {
                     // Set the project name to the name of the folder
                     var projectName = line.substring(line.lastIndexOf('/') + 1, line.lastIndexOf('\''));
                     currentProject.name = projectName;
@@ -152,7 +152,7 @@ try {
                         passed: true,
                         message: ''
                     });
-                    
+
                     currentTest.failed += 1;
                     continue;
                 }
