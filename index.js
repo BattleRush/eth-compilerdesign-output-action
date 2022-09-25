@@ -6,6 +6,7 @@ try {
     const makeOutputFile = core.getInput('make-output');
     let makeOutput = fs.readFile(makeOutputFile, 'utf8')
 
+    console.log("Received input file: " + makeOutputFile);
     console.log("Received input: " + makeOutput);
 
     var projectResults = [];
