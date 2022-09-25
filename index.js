@@ -39,7 +39,7 @@ try {
 
             var currentTest = null;
             for (var j = 0; j < testLines.length; j++) {
-                var line = testLines[j].trim();
+                var line = testLines[j];
 
                 // TODO Remove soon
                 console.log("Line: " + line);
@@ -73,7 +73,7 @@ try {
                     continue;
                 }
 
-                if (line.endsWith('(hidden)')) {
+                if (line.trim().endsWith('(hidden)')) {
                     continue;
                 }
 
@@ -108,7 +108,8 @@ try {
                     continue;
                 }
 
-                // Hidden test case likely
+                // Hidden test case likely because it didnt get caught by the above 
+                // TODO Check by "?/"" maybe?
                 if (line.endsWith(':')) {
                     if (currentTest != null)
                         currentProject.tests.push(currentTest);
@@ -133,7 +134,7 @@ try {
                 if(!currentTest)
                     continue;
 
-                if (line.startsWith('FAILED')) {
+                if (line.trim().startsWith('FAILED')) {
                     var name = line.split(':')[0].split('-')[1].trim();
                     var message = line.substring(line.indexOf(':') + 1).trim();
 
@@ -146,7 +147,7 @@ try {
                     currentTest.passed += 1;
                     continue;
                 }
-                if (line.startsWith('passed')) {
+                if (line.trim().startsWith('passed')) {
                     var name = line.split('-')[1].trim();
 
                     currentTest.subTests.push({
@@ -159,16 +160,34 @@ try {
                     continue;
                 }
 
-                if (line.startsWith('Hidden')) {
+                if (line.trim().startsWith('Hidden')) {
                     currentTest.hidden = true;
                     continue;
                 }
 
-                if (line.startsWith('OK')) {
+                if (line.trim().startsWith('OK')) {
                     // All tests are fine
 
                     continue;
                 }
+
+                // It fell trough all the cases, so it's likely a new test (without a : at the end)
+                if (currentTest != null)
+                    currentProject.tests.push(currentTest);
+
+                var name = line.trim();
+                var score = -1;
+                var maxScore = -1;
+
+                currentTest = {
+                    name: name,
+                    score: score,
+                    maxScore: maxScore,
+                    hidden: false,
+                    passed: 0,
+                    failed: 0,
+                    subTests: []
+                };
             }
         }
 
