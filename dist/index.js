@@ -9680,10 +9680,6 @@ try {
         }
         makeOutput = data;
 
-
-        console.log("Received input file: " + makeOutputFile);
-        console.log("Received input: " + makeOutput);
-
         var projectResults = [];
         var tests = makeOutput.split('./main.native --test');
 
@@ -9711,7 +9707,10 @@ try {
             var currentTest = null;
             for (var j = 0; j < testLines.length; j++) {
                 var line = testLines[j].trim();
+
+                // TODO Remove soon
                 console.log("Line: " + line);
+                
                 if (line.startsWith('Running test')) {
                     continue;
                 }
