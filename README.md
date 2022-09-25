@@ -2,20 +2,23 @@
 
 This action parses the output of the make test command and formats it as a GitHub Action markdown.
 
+![image](https://user-images.githubusercontent.com/11750584/192163257-d0357bde-e228-4eb1-acfb-e21c6aeb6a95.png)
+
+
 ## Inputs
 
-## `make-output`
-
+`make-output`
 **Required** The path to the output of the make command
 
 ## Outputs
 
-## `markdown`
+`markdown`
 
 The formatted markdown to use in the GitHub Action.
 
 ## Example usage
 
+```yml
 # Define your make step as follows
 - name: Run make
     id: maketest
@@ -28,31 +31,30 @@ The formatted markdown to use in the GitHub Action.
     uses: BatteRush/eth-compilerdesign-output-action@v0.0.1
     with:
         make-output: make.out
+```
 
+# SETUP
 
-## SETUP
-
-# Makefile
+## Makefile
 Put a new Makefile in the root of your Compiler Design project with the following content
 
 ```makefile
-# Get all root folders to run the make in except the _build dirrectory
-
+# Get all root folders to run the make in except the _build and llvm dirrectory
 SUBDIRS := $(wildcard */.)
+SUBDIRS := $(filter-out _build/.,$(SUBDIRS))
+SUBDIRS := $(filter-out llvm/.,$(SUBDIRS))
+
 MAKE := make test
 
 all: $(SUBDIRS)
 $(SUBDIRS):
-	@if [ $@ != "_build/." ]; then\
-		echo $@;\
-		echo "Entering $@...";\
-		$(MAKE) -C $@;\
-	fi
+	$(MAKE) -C $@;\
 
 .PHONY: all $(SUBDIRS)
 ```
 
 # Example makefile.yml
+You can put this in the root folder (.github/workflows) of the project which will then be used to run the action on each push
 
 ```yml
 name: Run Tests
