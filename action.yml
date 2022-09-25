@@ -1,0 +1,12 @@
+name: 'ETH Compiler Design Tests Output Formatter'
+description: 'Generates a nice output of the tests of each of the projects'
+inputs:
+  make-output:
+    description: 'Value of the make output'
+    required: true
+outputs:
+  markdown:
+    description: 'Markdown string of the tests'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
