@@ -42,7 +42,7 @@ The formatted markdown to use in the GitHub Action.
     uses: BattleRush/eth-compilerdesign-output-action@main
     with:
         make-output: make.out
-	token: ${{ secrets.PAT }}
+        token: ${{ secrets.PAT }}
         leaderboard: true
         teamname: 'YOUR_TEAM_NAME'
 ```
