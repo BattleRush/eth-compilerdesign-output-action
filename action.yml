@@ -3,6 +3,15 @@ description: 'Generates a nice output of the tests of each of the projects'
 inputs:
   make-output:
     description: 'Value of the make output'
+    required: true  
+  token:
+    description: 'GitHub token needed to create issue in the Leaderboard repo'
+    required: true
+  leaderboard:
+    description: 'Enable leaderboard'
+    required: true
+  teamname:
+    description: 'Team name'
     required: true
 outputs:
   markdown:

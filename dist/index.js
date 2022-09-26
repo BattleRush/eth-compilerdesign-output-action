@@ -9667,10 +9667,15 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(8864);
 const github = __nccwpck_require__(6366);
-const fs = __nccwpck_require__(7147)
+const fs = __nccwpck_require__(7147);
+
 
 try {
     const makeOutputFile = core.getInput('make-output');
+    const token = core.getInput('token');
+    const leaderboard = core.getInput('leaderboard');
+    const teamName = core.getInput('teamname');
+
     let makeOutput = "";
 
     fs.readFile(makeOutputFile, 'utf8', (err, data) => {
@@ -9706,11 +9711,8 @@ try {
 
             var currentTest = null;
             for (var j = 0; j < testLines.length; j++) {
-                var line = testLines[j];
-
-                // TODO Remove soon
+                var line = testLines[j].trim();
                 console.log("Line: " + line);
-
                 if (line.startsWith('Running test')) {
                     continue;
                 }
@@ -9731,7 +9733,6 @@ try {
                 if (line.startsWith('Failed:')) {
                     continue;
                 }
-
                 if (line.startsWith('Score:')) {
                     var score = parseInt(line.split(':')[1].split('(')[0].split('/')[0])
                     var maxScore = parseInt(line.split(':')[1].split('(')[0].split('/')[1]);
@@ -9739,16 +9740,7 @@ try {
                     currentProject.maxScore = maxScore;
                     continue;
                 }
-
-                if (line.trim().endsWith('(hidden)')) {
-                    continue;
-                }
-
-                if(line.indexOf('Leaving directory') > -1) {
-                    // Set the project name to the name of the folder
-                    var projectName = line.substring(line.lastIndexOf('/') + 1, line.lastIndexOf('\''));
-                    currentProject.name = projectName;
-
+                if (line.endsWith('(hidden)')) {
                     projectResults.push(currentProject);
                     break;
                 }
@@ -9775,8 +9767,7 @@ try {
                     continue;
                 }
 
-                // Hidden test case likely because it didnt get caught by the above 
-                // TODO Check by "?/"" maybe?
+                // Hidden test case likely
                 if (line.endsWith(':')) {
                     if (currentTest != null)
                         currentProject.tests.push(currentTest);
@@ -9797,11 +9788,8 @@ try {
                     continue;
                 }
 
-                // TODO Check this case
-                if(!currentTest)
-                    continue;
 
-                if (line.trim().startsWith('FAILED')) {
+                if (line.startsWith('FAILED')) {
                     var name = line.split(':')[0].split('-')[1].trim();
                     var message = line.substring(line.indexOf(':') + 1).trim();
 
@@ -9810,11 +9798,9 @@ try {
                         passed: false,
                         message: message
                     });
-
-                    currentTest.passed += 1;
                     continue;
                 }
-                if (line.trim().startsWith('passed')) {
+                if (line.startsWith('passed')) {
                     var name = line.split('-')[1].trim();
 
                     currentTest.subTests.push({
@@ -9822,21 +9808,21 @@ try {
                         passed: true,
                         message: ''
                     });
-
-                    currentTest.failed += 1;
                     continue;
                 }
 
-                if (line.trim().startsWith('Hidden')) {
+                if (line.startsWith('Hidden')) {
                     currentTest.hidden = true;
                     continue;
                 }
 
-                if (line.trim().startsWith('OK')) {
+                if (line.startsWith('OK')) {
                     // All tests are fine
 
                     continue;
                 }
+
+                // TODO This misses some student cases
 
                 // It fell trough all the cases, so it's likely a new test (without a : at the end)
                 if (currentTest != null)
@@ -9861,7 +9847,6 @@ try {
         //var json = JSON.stringify(projectResults, null, 2);
         //console.log(`JSON`);
         //console.log(json);
-
         var markdown = `# Test Results`
 
         for (var i = 0; i < projectResults.length; i++) {
@@ -9918,7 +9903,71 @@ try {
 
 
         core.setOutput("markdown", markdown);
+        console.log("Leaderboard: " + leaderboard);
+        // Only report leaderboard if its been set
+        if (leaderboard == "true") {
 
+            console.log("Doing leaderboard");
+
+            var markdownSummary = `# Test Results Summary for: ${teamName}\n\n`;
+            markdownSummary += `| Project | Score | Passed | Failed |\n`;
+            markdownSummary += `| ------- | ----- | ------ | ------ |\n`;
+
+
+            var summaryJson = {
+                teamName: teamName,
+                projects: []
+            };
+
+            for (var i = 0; i < projectResults.length; i++) {
+                var project = projectResults[i];
+                markdownSummary += `| ${project.name} | ${project.score}/${project.maxScore} | ${project.passed} | ${project.failed} |\n`;
+
+                // Project detecting by the amount of max score
+                // TODO make sure this holds for all 6 projects
+                var projectId = -1;
+                switch (project.maxScore) {
+                    case 67:
+                        projectId = 1;
+                        break;
+                    case 46:
+                        projectId = 2;
+                        break;
+                    default:
+                        projectId = 3;
+                }
+
+
+                summaryJson.projects.push({
+                    projectId: projectId,
+                    score: project.score,
+                    maxScore: project.maxScore,
+                    passed: project.passed,
+                    failed: project.failed,
+                    dateTime: new Date().toISOString()
+                });
+            }
+
+
+            // Create issue in a specific repository
+            const context = github.context;
+
+            // Print json in collapsable section
+            markdownSummary += `<details><summary>JSON</summary>\n\n`;
+            markdownSummary += `\`\`\`json\n${JSON.stringify(summaryJson, null, 2)}\n\`\`\`\n`;
+            markdownSummary += `</details>\n\n`;
+
+            // Read value from secrets
+
+            const octokit = github.getOctokit(token);
+
+            const newIssue = octokit.rest.issues.create({
+                owner: "BattleRush",
+                repo: "ETH-CompilerDesignHS22-Leaderboard",
+                title: 'Team: ' + teamName + ' - Test Results',
+                body: markdownSummary
+            });
+        }
     });
     // Get the JSON webhook payload for the event that triggered the workflow
     //const payload = JSON.stringify(github.context.payload, undefined, 2)
