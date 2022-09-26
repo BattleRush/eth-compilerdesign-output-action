@@ -28,7 +28,7 @@ The formatted markdown to use in the GitHub Action.
 
 # Then use the output formatter
 - name: Create GitHub Action markdown
-    uses: BatteRush/eth-compilerdesign-output-action@main
+    uses: BattleRush/eth-compilerdesign-output-action@main
     with:
         make-output: make.out
 ```
