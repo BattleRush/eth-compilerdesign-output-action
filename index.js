@@ -1,9 +1,14 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const fs = require('fs')
+const fs = require('fs');
+
 
 try {
     const makeOutputFile = core.getInput('make-output');
+    const token = core.getInput('token');
+    const leaderboard = core.getInput('leaderboard');
+    const teamName = core.getInput('teamname');
+
     let makeOutput = "";
 
     fs.readFile(makeOutputFile, 'utf8', (err, data) => {
@@ -40,10 +45,7 @@ try {
             var currentTest = null;
             for (var j = 0; j < testLines.length; j++) {
                 var line = testLines[j];
-
-                // TODO Remove soon
                 console.log("Line: " + line);
-
                 if (line.startsWith('Running test')) {
                     continue;
                 }
@@ -171,6 +173,7 @@ try {
                     continue;
                 }
 
+                // TODO This misses some student cases
                 // It fell trough all the cases, so it's likely a new test (without a : at the end)
                 if (currentTest != null)
                     currentProject.tests.push(currentTest);
@@ -194,7 +197,7 @@ try {
         //var json = JSON.stringify(projectResults, null, 2);
         //console.log(`JSON`);
         //console.log(json);
-
+        
         var markdown = `# Test Results`
 
         for (var i = 0; i < projectResults.length; i++) {
@@ -251,7 +254,71 @@ try {
 
 
         core.setOutput("markdown", markdown);
+        console.log("Leaderboard: " + leaderboard);
+        // Only report leaderboard if its been set
+        if (leaderboard == "true") {
 
+            console.log("Doing leaderboard");
+
+            var markdownSummary = `# Test Results Summary for: ${teamName}\n\n`;
+            markdownSummary += `| Project | Score | Passed | Failed |\n`;
+            markdownSummary += `| ------- | ----- | ------ | ------ |\n`;
+
+
+            var summaryJson = {
+                teamName: teamName,
+                projects: []
+            };
+
+            for (var i = 0; i < projectResults.length; i++) {
+                var project = projectResults[i];
+                markdownSummary += `| ${project.name} | ${project.score}/${project.maxScore} | ${project.passed} | ${project.failed} |\n`;
+
+                // Project detecting by the amount of max score
+                // TODO make sure this holds for all 6 projects
+                var projectId = -1;
+                switch (project.maxScore) {
+                    case 67:
+                        projectId = 1;
+                        break;
+                    case 46:
+                        projectId = 2;
+                        break;
+                    default:
+                        projectId = 3;
+                }
+
+
+                summaryJson.projects.push({
+                    projectId: projectId,
+                    score: project.score,
+                    maxScore: project.maxScore,
+                    passed: project.passed,
+                    failed: project.failed,
+                    dateTime: new Date().toISOString()
+                });
+            }
+
+
+            // Create issue in a specific repository
+            const context = github.context;
+
+            // Print json in collapsable section
+            markdownSummary += `<details><summary>JSON</summary>\n\n`;
+            markdownSummary += `\`\`\`json\n${JSON.stringify(summaryJson, null, 2)}\n\`\`\`\n`;
+            markdownSummary += `</details>\n\n`;
+
+            // Read value from secrets
+
+            const octokit = github.getOctokit(token);
+
+            const newIssue = octokit.rest.issues.create({
+                owner: "BattleRush",
+                repo: "ETH-CompilerDesignHS22-Leaderboard",
+                title: 'Team: ' + teamName + ' - Test Results',
+                body: markdownSummary
+            });
+        }
     });
     // Get the JSON webhook payload for the event that triggered the workflow
     //const payload = JSON.stringify(github.context.payload, undefined, 2)
