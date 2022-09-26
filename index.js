@@ -24,10 +24,6 @@ try {
         console.log(tests);
         for (var i = 1; i < tests.length; i++) {
             var projectName = "";
-            if (i == 1)
-                projectName = "Project 1";
-            if (i == 2)
-                projectName = "Project 2";
 
             var currentProject = {
                 name: projectName,
@@ -72,6 +68,7 @@ try {
                     var maxScore = parseInt(line.split(':')[1].split('(')[0].split('/')[1]);
                     currentProject.score = score;
                     currentProject.maxScore = maxScore;
+
                     continue;
                 }
 
@@ -83,6 +80,18 @@ try {
                     // Set the project name to the name of the folder
                     var projectName = line.substring(line.lastIndexOf('/') + 1, line.lastIndexOf('\''));
                     currentProject.name = projectName;
+
+                    switch (currentProject.maxScore) {
+                        case 67:
+                            currentProject.name = "Project 1: Hellocaml";
+                            break;
+                        case 46:
+                            currentProject.name = "Project 2: x86Lite";
+                            break;
+                        default:
+                            currentProject.name = "Project 3: Compiling LLVM";
+                            break;
+                    }
 
                     projectResults.push(currentProject);
                     break;
@@ -175,8 +184,9 @@ try {
 
                 // TODO This misses some student cases
                 // It fell trough all the cases, so it's likely a new test (without a : at the end)
-                if (currentTest != null)
+                if (currentTest != null){
                     currentProject.tests.push(currentTest);
+                }
 
                 var name = line.trim();
                 var score = -1;
@@ -197,7 +207,7 @@ try {
         //var json = JSON.stringify(projectResults, null, 2);
         //console.log(`JSON`);
         //console.log(json);
-        
+
         var markdown = `# Test Results`
 
         for (var i = 0; i < projectResults.length; i++) {

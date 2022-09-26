@@ -9691,10 +9691,6 @@ try {
         console.log(tests);
         for (var i = 1; i < tests.length; i++) {
             var projectName = "";
-            if (i == 1)
-                projectName = "Project 1";
-            if (i == 2)
-                projectName = "Project 2";
 
             var currentProject = {
                 name: projectName,
@@ -9711,7 +9707,7 @@ try {
 
             var currentTest = null;
             for (var j = 0; j < testLines.length; j++) {
-                var line = testLines[j].trim();
+                var line = testLines[j];
                 console.log("Line: " + line);
                 if (line.startsWith('Running test')) {
                     continue;
@@ -9733,14 +9729,37 @@ try {
                 if (line.startsWith('Failed:')) {
                     continue;
                 }
+
                 if (line.startsWith('Score:')) {
                     var score = parseInt(line.split(':')[1].split('(')[0].split('/')[0])
                     var maxScore = parseInt(line.split(':')[1].split('(')[0].split('/')[1]);
                     currentProject.score = score;
                     currentProject.maxScore = maxScore;
+
                     continue;
                 }
-                if (line.endsWith('(hidden)')) {
+
+                if (line.trim().endsWith('(hidden)')) {
+                    continue;
+                }
+
+                if(line.indexOf('Leaving directory') > -1) {
+                    // Set the project name to the name of the folder
+                    var projectName = line.substring(line.lastIndexOf('/') + 1, line.lastIndexOf('\''));
+                    currentProject.name = projectName;
+
+                    switch (currentProject.maxScore) {
+                        case 67:
+                            currentProject.name = "Project 1: Hellocaml";
+                            break;
+                        case 46:
+                            currentProject.name = "Project 2: x86Lite";
+                            break;
+                        default:
+                            currentProject.name = "Project 3: Compiling LLVM";
+                            break;
+                    }
+
                     projectResults.push(currentProject);
                     break;
                 }
@@ -9767,7 +9786,8 @@ try {
                     continue;
                 }
 
-                // Hidden test case likely
+                // Hidden test case likely because it didnt get caught by the above 
+                // TODO Check by "?/"" maybe?
                 if (line.endsWith(':')) {
                     if (currentTest != null)
                         currentProject.tests.push(currentTest);
@@ -9788,8 +9808,11 @@ try {
                     continue;
                 }
 
+                // TODO Check this case
+                if(!currentTest)
+                    continue;
 
-                if (line.startsWith('FAILED')) {
+                if (line.trim().startsWith('FAILED')) {
                     var name = line.split(':')[0].split('-')[1].trim();
                     var message = line.substring(line.indexOf(':') + 1).trim();
 
@@ -9798,9 +9821,11 @@ try {
                         passed: false,
                         message: message
                     });
+
+                    currentTest.passed += 1;
                     continue;
                 }
-                if (line.startsWith('passed')) {
+                if (line.trim().startsWith('passed')) {
                     var name = line.split('-')[1].trim();
 
                     currentTest.subTests.push({
@@ -9808,25 +9833,27 @@ try {
                         passed: true,
                         message: ''
                     });
+
+                    currentTest.failed += 1;
                     continue;
                 }
 
-                if (line.startsWith('Hidden')) {
+                if (line.trim().startsWith('Hidden')) {
                     currentTest.hidden = true;
                     continue;
                 }
 
-                if (line.startsWith('OK')) {
+                if (line.trim().startsWith('OK')) {
                     // All tests are fine
 
                     continue;
                 }
 
                 // TODO This misses some student cases
-
                 // It fell trough all the cases, so it's likely a new test (without a : at the end)
-                if (currentTest != null)
+                if (currentTest != null){
                     currentProject.tests.push(currentTest);
+                }
 
                 var name = line.trim();
                 var score = -1;
@@ -9847,6 +9874,7 @@ try {
         //var json = JSON.stringify(projectResults, null, 2);
         //console.log(`JSON`);
         //console.log(json);
+
         var markdown = `# Test Results`
 
         for (var i = 0; i < projectResults.length; i++) {
