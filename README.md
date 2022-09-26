@@ -133,10 +133,10 @@ jobs:
       with:
           make-output: make.out
           leaderboard: true
-	  # Create token at https://github.com/settings/tokens
-	  # The token only needs the "public_repo" permission which allows the action to create an issue on the leaderboard repo
-	  # If leaderboard = false the following fields can be set to ''
-	  token: ${{ secrets.PAT }}
+          # Create token at https://github.com/settings/tokens
+          # The token only needs the "public_repo" permission which allows the action to create an issue on the leaderboard repo
+          # If leaderboard = false the following fields can be set to ''
+          token: ${{ secrets.PAT }}
           teamname: 'YOUR_TEAM_NAME'
           
     - name: Get the output markdown
