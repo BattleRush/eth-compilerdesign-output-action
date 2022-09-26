@@ -28,7 +28,7 @@ The formatted markdown to use in the GitHub Action.
 
 # Then use the output formatter
 - name: Create GitHub Action markdown
-    uses: BatteRush/eth-compilerdesign-output-action@v0.0.1
+    uses: BattleRush/eth-compilerdesign-output-action@main
     with:
         make-output: make.out
 ```
@@ -79,7 +79,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: /home/runner/.opam
-        key: ${{ runner.os }}-opam
+        key: ${{ runner.os }}-opam-4.13.1
 
     - name: Cache LLVM
       id: cache-llvm
@@ -97,9 +97,9 @@ jobs:
     - name: Set up OCaml
       uses: ocaml/setup-ocaml@v1.1.11
       with:
-        ocaml-version: 4.06.0
+        ocaml-version: 4.13.1
 
-    # Change to opam environment after 4.06.0 switch and install needed packages
+    # Change to opam environment after 4.13.1 switch and install needed packages
     - run: eval $(opam env)
     - run: opam install ocamlbuild
     - run: opam install menhir
