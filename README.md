@@ -40,8 +40,7 @@ The formatted markdown to use in the GitHub Action.
     uses: BattleRush/eth-compilerdesign-output-action@main
     with:
         make-output: make.out
-        token: '' # will not be needed
-        leaderboard: false # disabled for now
+        leaderboard: false
         teamname: 'YOUR_TEAM_NAME'
 ```
 
@@ -128,10 +127,8 @@ jobs:
       uses: BattleRush/eth-compilerdesign-output-action@main
       with:
           make-output: make.out
-
-          token: '' # will not be needed
-          leaderboard: false # disabled for now
-          teamname: 'YOUR_TEAM_NAME'
+          leaderboard: true
+          teamname: 'TODO YOUR_TEAM_NAME'
           
     - name: Get the output markdown
       run: echo "${{ steps.outputparser.outputs.markdown }}" >> $GITHUB_STEP_SUMMARY
