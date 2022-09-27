@@ -42,8 +42,8 @@ The formatted markdown to use in the GitHub Action.
     uses: BattleRush/eth-compilerdesign-output-action@main
     with:
         make-output: make.out
-        token: ${{ secrets.PAT }}
-        leaderboard: true
+        token: '' # will not be needed
+        leaderboard: false # disabled for now
         teamname: 'YOUR_TEAM_NAME'
 ```
 
@@ -83,9 +83,7 @@ jobs:
   build:
     # One can also use ubuntu-18.04 however this is getting depricated by Jan 2023
     runs-on: ubuntu-20.04 #ubuntu-latest for 22.04 (22.04 wont work with LLVM 9 however)
-    
-    environment: Token # Or the name of the environment where the PAT Token is saved (not needed if setting leaderboard = false)
-    
+        
     steps:
     - name: checkout repo
       uses: actions/checkout@v3
@@ -132,11 +130,9 @@ jobs:
       uses: BattleRush/eth-compilerdesign-output-action@main
       with:
           make-output: make.out
-          leaderboard: true
-          # Create token at https://github.com/settings/tokens
-          # The token only needs the "public_repo" permission which allows the action to create an issue on the leaderboard repo
-          # If leaderboard = false the following fields can be set to ''
-          token: ${{ secrets.PAT }}
+
+          token: '' # will not be needed
+          leaderboard: false # disabled for now
           teamname: 'YOUR_TEAM_NAME'
           
     - name: Get the output markdown
