@@ -77,7 +77,7 @@ try {
                     continue;
                 }
 
-                if(line.indexOf('Leaving directory') > -1) {
+                if (line.indexOf('Leaving directory') > -1) {
                     // Set the project name to the name of the folder
                     var projectName = line.substring(line.lastIndexOf('/') + 1, line.lastIndexOf('\''));
                     currentProject.name = projectName;
@@ -143,7 +143,7 @@ try {
                 }
 
                 // TODO Check this case
-                if(!currentTest)
+                if (!currentTest)
                     continue;
 
                 if (line.trim().startsWith('FAILED')) {
@@ -185,7 +185,7 @@ try {
 
                 // TODO This misses some student cases
                 // It fell trough all the cases, so it's likely a new test (without a : at the end)
-                if (currentTest != null){
+                if (currentTest != null) {
                     currentProject.tests.push(currentTest);
                 }
 
@@ -299,15 +299,18 @@ try {
                         projectId = 3;
                 }
 
+                // Add only if the projectId wasnt added yet
+                if (summaryJson.projects.filter(p => p.projectId == projectId).length == 0) {
 
-                summaryJson.projects.push({
-                    projectId: projectId,
-                    score: project.score,
-                    maxScore: project.maxScore,
-                    passed: project.passed,
-                    failed: project.failed,
-                    dateTime: new Date().toISOString()
-                });
+                    summaryJson.projects.push({
+                        projectId: projectId,
+                        score: project.score,
+                        maxScore: project.maxScore,
+                        passed: project.passed,
+                        failed: project.failed,
+                        dateTime: new Date().toISOString()
+                    });
+                }
             }
 
 
