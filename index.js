@@ -318,21 +318,24 @@ try {
             markdownSummary += `\`\`\`json\n${JSON.stringify(summaryJson, null, 2)}\n\`\`\`\n`;
             markdownSummary += `</details>\n\n`;
 
-            // Read value from secrets
+            // Json string
+            var jsonString = JSON.stringify(summaryJson, null, 2);
 
-            const octokit = github.getOctokit(token);
+            // Call web rest api to upload jsonString
+            var url = "https://cdhs22.battlerush.dev/apit/test";
 
-            const newIssue = octokit.rest.issues.create({
-                owner: "BattleRush",
-                repo: "ETH-CompilerDesignHS22-Leaderboard",
-                title: 'Team: ' + teamName + ' - Test Results',
-                body: markdownSummary
-            });
+            var options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(summaryJson, null, 2)
+            };
+
+            fetch(url, options)
         }
     });
-    // Get the JSON webhook payload for the event that triggered the workflow
-    //const payload = JSON.stringify(github.context.payload, undefined, 2)
-    //console.log(`The event payload: ${payload}`);
+
 } catch (error) {
     core.setFailed(error.message);
 }
