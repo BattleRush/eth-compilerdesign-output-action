@@ -336,7 +336,7 @@ try {
                 body: JSON.stringify(summaryJson, null, 2)
             };
 
-            request.post(url, summaryJson, function (error, response, body) {
+            request.post(url, { json: summaryJson }, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     console.log(body);
                 }
