@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
-import fetch from 'node-fetch';
+const request = require('request');
 
 
 try {
@@ -333,7 +333,11 @@ try {
                 body: JSON.stringify(summaryJson, null, 2)
             };
 
-            fetch(url, options)
+            request.post(url, summaryJson, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    console.log(body);
+                }
+            });
         }
     });
 
