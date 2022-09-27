@@ -10,13 +10,11 @@ This action parses the output of the make test command and formats it as a GitHu
 `make-output`
 **Required** The path to the output of the make command
 
-Leaderboard options only (If leaderboard is false, then token and teamname can be set to '')
+Leaderboard options only (If leaderboard is false, then teamname can be set to '')
+Leaderboard is visible here: https://github.com/BattleRush/ETH-CompilerDesignHS22-Leaderboard
 
 `leaderboard`
 **Required** true if you would like to participate with the leaderboard summary, else the report is only local
-
-`token`
-**Required** Requiered to create an issue (to send data) about your report
 
 `teamname`
 **Required** Name which should be shown for your score
