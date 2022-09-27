@@ -10,6 +10,17 @@ This action parses the output of the make test command and formats it as a GitHu
 `make-output`
 **Required** The path to the output of the make command
 
+Leaderboard options only (If leaderboard is false, then token and teamname can be set to '')
+
+`leaderboard`
+**Required** true if you would like to participate with the leaderboard summary, else the report is only local
+
+`token`
+**Required** Requiered to create an issue (to send data) about your report
+
+`teamname`
+**Required** Name which should be shown for your score
+
 ## Outputs
 
 `markdown`
@@ -31,6 +42,9 @@ The formatted markdown to use in the GitHub Action.
     uses: BattleRush/eth-compilerdesign-output-action@main
     with:
         make-output: make.out
+        token: '' # will not be needed
+        leaderboard: false # disabled for now
+        teamname: 'YOUR_TEAM_NAME'
 ```
 
 # SETUP
@@ -69,7 +83,7 @@ jobs:
   build:
     # One can also use ubuntu-18.04 however this is getting depricated by Jan 2023
     runs-on: ubuntu-20.04 #ubuntu-latest for 22.04 (22.04 wont work with LLVM 9 however)
-
+        
     steps:
     - name: checkout repo
       uses: actions/checkout@v3
@@ -116,6 +130,10 @@ jobs:
       uses: BattleRush/eth-compilerdesign-output-action@main
       with:
           make-output: make.out
+
+          token: '' # will not be needed
+          leaderboard: false # disabled for now
+          teamname: 'YOUR_TEAM_NAME'
           
     - name: Get the output markdown
       run: echo "${{ steps.outputparser.outputs.markdown }}" >> $GITHUB_STEP_SUMMARY
