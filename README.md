@@ -75,6 +75,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch: # This enables the workflow to be manually run in the browser in the 'Actions' Tab
 
 jobs:
   build:
