@@ -81,6 +81,7 @@ try {
                     // Set the project name to the name of the folder
                     var projectName = line.substring(line.lastIndexOf('/') + 1, line.lastIndexOf('\''));
                     currentProject.name = projectName;
+                    currentProject.folderName = projectName;
 
                     switch (currentProject.maxScore) {
                         case 67:
@@ -92,6 +93,21 @@ try {
                         default:
                             currentProject.name = "Project 3: Compiling LLVM";
                             break;
+
+                            // TO Come
+
+                            /*                    case 4:
+                        projectName = "Project 4: Compiling Oat v.1";
+                        maxScore = -1;
+                        break;
+                    case 5:
+                        projectName = "Project 5: Compiling Full Oat";
+                        maxScore = 80;
+                        break;
+                    case 6:
+                        projectName = "Project 6: Dataflow Analysis and Register Allocation";
+                        maxScore = 100;
+                        break; */
                     }
 
                     projectResults.push(currentProject);
@@ -213,7 +229,7 @@ try {
 
         for (var i = 0; i < projectResults.length; i++) {
             var project = projectResults[i];
-            markdown += `\n\n## ${project.name}\n\n`;
+            markdown += `\n\n## ${project.name} (${project.folderName}})\n\n`;
             // Round project score percent to 2 decimal places
             var projectScorePercent = Math.round((project.score / project.maxScore) * 10000) / 100;
             markdown += `Score ${project.score} of ${project.maxScore} (${projectScorePercent}%)\n`;
