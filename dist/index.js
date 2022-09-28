@@ -42662,7 +42662,7 @@ try {
 
         for (var i = 0; i < projectResults.length; i++) {
             var project = projectResults[i];
-            markdown += `\n\n## ${project.name} (${project.folderName}})\n\n`;
+            markdown += `\n\n## ${project.name} (${project.folderName})\n\n`;
             // Round project score percent to 2 decimal places
             var projectScorePercent = Math.round((project.score / project.maxScore) * 10000) / 100;
             markdown += `Score ${project.score} of ${project.maxScore} (${projectScorePercent}%)\n`;
