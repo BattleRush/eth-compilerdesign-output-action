@@ -22,7 +22,7 @@ try {
         var projectResults = [];
         var tests = makeOutput.split('./main.native --test');
 
-        console.log(tests);
+        //console.log(tests);
         for (var i = 1; i < tests.length; i++) {
             var projectName = "";
 
@@ -36,13 +36,13 @@ try {
                 tests: []
             };
 
-            console.log(tests[i]);
+            //console.log(tests[i]);
             var testLines = tests[i].split('\n');
 
             var currentTest = null;
             for (var j = 0; j < testLines.length; j++) {
                 var line = testLines[j];
-                console.log("Line: " + line);
+                //console.log("Line: " + line);
                 if (line.startsWith('Running test')) {
                     continue;
                 }
@@ -119,9 +119,16 @@ try {
                         currentProject.tests.push(currentTest);
 
                     var name = line.split('(')[0].trim();
+                    var score = -1;
+                    var maxScore = -1;
+
                     if (line.indexOf('points)') > -1) {
-                        var score = parseInt(line.split('(')[1].split('/')[0]);
-                        var maxScore = parseInt(line.split('(')[1].split('/')[1]);
+                        var scoreString = line.split('(')[1].split('/')[0].trim();
+
+                        if(scoreString != "?")
+                            score = parseInt(scoreString);
+
+                        maxScore = parseInt(line.split('(')[1].split('/')[1]);
                     }
 
                     currentTest = {
@@ -250,7 +257,7 @@ try {
 
                 var passedCount = test.score == test.maxScore ? '**All**' : `${test.passed}`;
                 var failedCount = test.score == test.maxScore ? '**None**' : `${test.failed}`;
-                var score = test.hidden ? '?' : `${test.score}/${test.maxScore}`;
+                var score = test.hidden ?  `?/${test.maxScore}` : `${test.score}/${test.maxScore}`;
 
                 if (test.hidden) {
                     emoteResult = ':question:';
