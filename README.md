@@ -54,6 +54,8 @@ Put a new Makefile in the root of your Compiler Design project with the followin
 SUBDIRS := $(wildcard */.)
 SUBDIRS := $(filter-out _build/.,$(SUBDIRS))
 SUBDIRS := $(filter-out llvm/.,$(SUBDIRS))
+# You can exclude folders you dont want to test here
+#SUBDIRS := $(filter-out hw1/.,$(SUBDIRS))
 
 MAKE := make test
 
