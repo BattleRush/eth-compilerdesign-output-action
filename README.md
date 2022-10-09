@@ -135,6 +135,24 @@ jobs:
       run: echo "${{ steps.outputparser.outputs.markdown }}" >> $GITHUB_STEP_SUMMARY
 ```
 
+# Important
+
+To prevent any build errors, its recommended to not push any build binaries. For this reason create a .gitignore file in your root directory with the following content
+
+```
+.cmo
+.o
+.cmi
+.cmx
+
+_build
+.gitignore
+
+.vscode
+
+main.native
+
+```
 
 # Example output 
 
