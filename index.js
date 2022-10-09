@@ -82,7 +82,7 @@ try {
                     var projectName = line.substring(line.lastIndexOf('/') + 1, line.lastIndexOf('\''));
                     currentProject.name = projectName;
                     currentProject.folderName = projectName;
-
+                    var isInvalidProject = false;
                     /* TODO SET SCORE FOR PROJECT WHEN RELEASED */
                     switch (currentProject.maxScore) {
                         case 67:
@@ -103,9 +103,16 @@ try {
                         case 100:
                             currentProject.name = "Project 6: Dataflow Analysis and Register Allocation";
                             break; 
+                            
+                        default:
+                            isInvalidProject = true;
+                            break;
+                            
                     }
-
-                    projectResults.push(currentProject);
+                    
+                    if(!isInvalidProject)
+                        projectResults.push(currentProject);
+                    
                     break;
                 }
 
