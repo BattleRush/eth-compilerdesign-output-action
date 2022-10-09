@@ -83,6 +83,7 @@ try {
                     currentProject.name = projectName;
                     currentProject.folderName = projectName;
 
+                    /* TODO SET SCORE FOR PROJECT WHEN RELEASED */
                     switch (currentProject.maxScore) {
                         case 67:
                             currentProject.name = "Project 1: Hellocaml";
@@ -90,24 +91,18 @@ try {
                         case 46:
                             currentProject.name = "Project 2: x86Lite";
                             break;
-                        default:
+                        case -1:
                             currentProject.name = "Project 3: Compiling LLVM";
                             break;
-
-                            // TO Come
-
-                            /*                    case 4:
-                        projectName = "Project 4: Compiling Oat v.1";
-                        maxScore = -1;
-                        break;
-                    case 5:
-                        projectName = "Project 5: Compiling Full Oat";
-                        maxScore = 80;
-                        break;
-                    case 6:
-                        projectName = "Project 6: Dataflow Analysis and Register Allocation";
-                        maxScore = 100;
-                        break; */
+                        case -2:
+                            currentProject.name = "Project 4: Compiling Oat v.1";
+                            break;
+                        case 80:
+                            currentProject.name = "Project 5: Compiling Full Oat";
+                            break;
+                        case 100:
+                            currentProject.name = "Project 6: Dataflow Analysis and Register Allocation";
+                            break; 
                     }
 
                     projectResults.push(currentProject);
