@@ -42524,7 +42524,7 @@ try {
                         case 46:
                             currentProject.name = "Project 2: x86Lite";
                             break;
-                        case -1:
+                        case 77:
                             currentProject.name = "Project 3: Compiling LLVM";
                             break;
                         case -2:
