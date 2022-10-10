@@ -347,7 +347,8 @@ try {
 
             // Json string
             var jsonString = JSON.stringify(summaryJson, null, 2);
-
+            console.log(jsonString);
+            
             // Call web rest api to upload jsonString
             var url = "https://cdhs22.battlerush.dev/api/test";
 
