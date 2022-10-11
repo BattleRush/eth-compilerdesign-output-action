@@ -42535,17 +42535,17 @@ try {
                             break;
                         case 100:
                             currentProject.name = "Project 6: Dataflow Analysis and Register Allocation";
-                            break; 
-                            
+                            break;
+
                         default:
                             isInvalidProject = true;
                             break;
-                            
+
                     }
-                    
-                    if(!isInvalidProject)
+
+                    if (!isInvalidProject)
                         projectResults.push(currentProject);
-                    
+
                     break;
                 }
 
@@ -42560,7 +42560,7 @@ try {
                     if (line.indexOf('points)') > -1) {
                         var scoreString = line.split('(')[1].split('/')[0].trim();
 
-                        if(scoreString != "?")
+                        if (scoreString != "?")
                             score = parseInt(scoreString);
 
                         maxScore = parseInt(line.split('(')[1].split('/')[1]);
@@ -42669,61 +42669,63 @@ try {
 
         var markdown = `# Test Results`
 
-        // Sort projectResults by projectId descending
-        projectResults.sort(function (a, b) {
-            return b.projectId - a.projectId;
-        });
+        // Print projects from projectId descending
+        for (var projectId = 6; projectId > 0; projectId--) {
+            for (var i = 0; i < projectResults.length; i++) {
+                var project = projectResults[i];
 
-        for (var i = 0; i < projectResults.length; i++) {
-            var project = projectResults[i];
-            markdown += `\n\n## ${project.name} (${project.folderName})\n\n`;
-            // Round project score percent to 2 decimal places
-            var projectScorePercent = Math.round((project.score / project.maxScore) * 10000) / 100;
-            markdown += `Score ${project.score} of ${project.maxScore} (${projectScorePercent}%)\n`;
-            markdown += `Passed: ${project.passed}\n`;
-            markdown += `Failed: ${project.failed}\n`;
+                if(project.projectId != projectId)
+                    continue;
 
-            // Make the table collapsable
-            markdown += `<details><summary>Test details</summary>\n\n`;
+                markdown += `\n\n## ${project.name} (${project.folderName})\n\n`;
+                // Round project score percent to 2 decimal places
+                var projectScorePercent = Math.round((project.score / project.maxScore) * 10000) / 100;
+                markdown += `Score ${project.score} of ${project.maxScore} (${projectScorePercent}%)\n`;
+                markdown += `Passed: ${project.passed}\n`;
+                markdown += `Failed: ${project.failed}\n`;
 
-            // Create markdown table for each test
-            markdown += `| Test | Score | Passed | Failed | Result |\n`;
-            markdown += `| ---- | ----- | ------ | ------ | ------ |\n`;
+                // Make the table collapsable
+                markdown += `<details><summary>Test details</summary>\n\n`;
 
-            for (var j = 0; j < project.tests.length; j++) {
-                var test = project.tests[j];
-                var name = test.score == test.maxScore ? `**${test.name}**` : test.name;
-                var emoteResult = test.score == test.maxScore ? ':heavy_check_mark:' : ':x:';
+                // Create markdown table for each test
+                markdown += `| Test | Score | Passed | Failed | Result |\n`;
+                markdown += `| ---- | ----- | ------ | ------ | ------ |\n`;
 
-                var passedCount = test.score == test.maxScore ? '**All**' : `${test.passed}`;
-                var failedCount = test.score == test.maxScore ? '**None**' : `${test.failed}`;
-                var score = test.hidden ?  `?/${test.maxScore}` : `${test.score}/${test.maxScore}`;
+                for (var j = 0; j < project.tests.length; j++) {
+                    var test = project.tests[j];
+                    var name = test.score == test.maxScore ? `**${test.name}**` : test.name;
+                    var emoteResult = test.score == test.maxScore ? ':heavy_check_mark:' : ':x:';
 
-                if (test.hidden) {
-                    emoteResult = ':question:';
-                    passedCount = '?';
-                    failedCount = '?';
-                }
-                else if (test.maxScore < 0) {
-                    score = "user-defined";
-                }
+                    var passedCount = test.score == test.maxScore ? '**All**' : `${test.passed}`;
+                    var failedCount = test.score == test.maxScore ? '**None**' : `${test.failed}`;
+                    var score = test.hidden ? `?/${test.maxScore}` : `${test.score}/${test.maxScore}`;
 
-                markdown += `| ${name} | ${score} | ${passedCount} | ${failedCount} | ${emoteResult} |\n`;
+                    if (test.hidden) {
+                        emoteResult = ':question:';
+                        passedCount = '?';
+                        failedCount = '?';
+                    }
+                    else if (test.maxScore < 0) {
+                        score = "user-defined";
+                    }
 
-                if (test.subTests.length > 0) {
-                    for (var k = 0; k < test.subTests.length; k++) {
-                        var subTest = test.subTests[k];
+                    markdown += `| ${name} | ${score} | ${passedCount} | ${failedCount} | ${emoteResult} |\n`;
 
-                        var subTestPassResult = subTest.passed ? ':heavy_check_mark:' : '';
-                        var subTestFailResult = subTest.passed ? '' : ':x:';
+                    if (test.subTests.length > 0) {
+                        for (var k = 0; k < test.subTests.length; k++) {
+                            var subTest = test.subTests[k];
 
-                        var subTestMessage = subTest.passed ? '' : subTest.message;
-                        markdown += `|   - ${subTest.name} | | ${subTestPassResult} | ${subTestFailResult} | ${subTestMessage} |\n`;
+                            var subTestPassResult = subTest.passed ? ':heavy_check_mark:' : '';
+                            var subTestFailResult = subTest.passed ? '' : ':x:';
+
+                            var subTestMessage = subTest.passed ? '' : subTest.message;
+                            markdown += `|   - ${subTest.name} | | ${subTestPassResult} | ${subTestFailResult} | ${subTestMessage} |\n`;
+                        }
                     }
                 }
-            }
 
-            markdown += `</details>\n\n`;
+                markdown += `</details>\n\n`;
+            }
         }
 
 
@@ -42788,7 +42790,7 @@ try {
             // Json string
             var jsonString = JSON.stringify(summaryJson, null, 2);
             console.log(jsonString);
-            
+
             // Call web rest api to upload jsonString
             var url = "https://cdhs22.battlerush.dev/api/test";
 
