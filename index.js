@@ -87,21 +87,27 @@ try {
                     switch (currentProject.maxScore) {
                         case 67:
                             currentProject.name = "Project 1: Hellocaml";
+                            currentProject.projectId = 1;
                             break;
                         case 46:
                             currentProject.name = "Project 2: x86Lite";
+                            currentProject.projectId = 2;
                             break;
                         case 77:
                             currentProject.name = "Project 3: Compiling LLVM";
+                            currentProject.projectId = 3;
                             break;
                         case -2:
                             currentProject.name = "Project 4: Compiling Oat v.1";
+                            currentProject.projectId = 4;
                             break;
                         case 80:
                             currentProject.name = "Project 5: Compiling Full Oat";
+                            currentProject.projectId = 5;
                             break;
                         case 100:
                             currentProject.name = "Project 6: Dataflow Analysis and Register Allocation";
+                            currentProject.projectId = 6;
                             break;
 
                         default:
