@@ -236,6 +236,11 @@ try {
 
         var markdown = `# Test Results`
 
+        // Sort projectResults by projectId descending
+        projectResults.sort(function (a, b) {
+            return b.projectId - a.projectId;
+        });
+
         for (var i = 0; i < projectResults.length; i++) {
             var project = projectResults[i];
             markdown += `\n\n## ${project.name} (${project.folderName})\n\n`;
