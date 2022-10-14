@@ -42621,7 +42621,7 @@ try {
                         message: message
                     });
 
-                    currentTest.passed += 1;
+                    currentTest.failed += 1;
                     continue;
                 }
                 if (line.trim().startsWith('passed')) {
@@ -42633,7 +42633,7 @@ try {
                         message: ''
                     });
 
-                    currentTest.failed += 1;
+                    currentTest.passed += 1;
                     continue;
                 }
 
