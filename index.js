@@ -40,6 +40,7 @@ try {
             var testLines = tests[i].split('\n');
 
             var currentTest = null;
+            var firstPointsEntryDetected = false;
             for (var j = 0; j < testLines.length; j++) {
                 var line = testLines[j];
                 //console.log("Line: " + line);
@@ -124,6 +125,7 @@ try {
                 }
 
                 if (line.indexOf('points') > -1) {
+                    firstPointsEntryDetected = true;
                     if (currentTest != null)
                         currentProject.tests.push(currentTest);
 
@@ -151,6 +153,9 @@ try {
                     };
                     continue;
                 }
+
+                if(!firstPointsEntryDetected)
+                    continue; // As first the logs are output we just ignore until we see an entry containing "points" its not perfect but it works
 
                 // Hidden test case likely because it didnt get caught by the above 
                 // TODO Check by "?/"" maybe?
