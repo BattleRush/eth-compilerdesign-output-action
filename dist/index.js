@@ -42703,8 +42703,8 @@ try {
                     var name = test.score == test.maxScore ? `**${test.name}**` : test.name;
                     var emoteResult = test.score == test.maxScore ? ':heavy_check_mark:' : ':x:';
 
-                    var passedCount = test.failed == 0 ? '**All**' : `${test.passed}`;
-                    var failedCount = test.failed == 0 ? '**None**' : `${test.failed}`;
+                    var passedCount = test.failed == 0 ? '**All**' : `${test.passed} :heavy_check_mark:`;
+                    var failedCount = test.failed == 0 ? '**None**' : `${test.failed} :x:`;
                     var score = test.hidden ? `?/${test.maxScore}` : `${test.score}/${test.maxScore}`;
 
                     if (test.hidden) {
