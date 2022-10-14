@@ -97,7 +97,7 @@ try {
                             currentProject.name = "Project 3: Compiling LLVM";
                             currentProject.projectId = 3;
                             break;
-                        case -2:
+                        case -2:// Will also have 80 differentiate by test names
                             currentProject.name = "Project 4: Compiling Oat v.1";
                             currentProject.projectId = 4;
                             break;
@@ -112,12 +112,13 @@ try {
 
                         default:
                             isInvalidProject = true;
+                            currentProject.name = "Invalid Project [Unknown total score amount]";
+                            currentProject.projectId = -1;
                             break;
 
                     }
 
-                    if (!isInvalidProject)
-                        projectResults.push(currentProject);
+                    projectResults.push(currentProject);
 
                     break;
                 }
@@ -243,11 +244,11 @@ try {
         var markdown = `# Test Results`
 
         // Print projects from projectId descending
-        for (var projectId = 6; projectId > 0; projectId--) {
+        for (var projectId = 6; projectId >= -1; projectId--) {
             for (var i = 0; i < projectResults.length; i++) {
                 var project = projectResults[i];
 
-                if(project.projectId != projectId)
+                if (project.projectId != projectId)
                     continue;
 
                 markdown += `\n\n## ${project.name} (${project.folderName})\n\n`;
@@ -333,21 +334,37 @@ try {
                     case 46:
                         projectId = 2;
                         break;
-                    default:
+                    case 77:
                         projectId = 3;
+                        break;
+                    case 80:
+                        projectId = 4;
+                        break;
+                    case 81: // Will be 80 todo
+                        projectId = 5;
+                        break;
+                    case 100: // Will be 80 todo
+                        projectId = 6;
+                        break;
+                    default:
+                        projectId = -1;
                 }
 
-                // Add only if the projectId wasnt added yet
-                if (summaryJson.projects.filter(p => p.projectId == projectId).length == 0) {
+                if (projectId < 0) {
+                    console.log(`Project ${project.name} has an unknown max score of ${project.maxScore}`);
+                } else {
+                    // Add only if the projectId wasnt added yet
+                    if (summaryJson.projects.filter(p => p.projectId == projectId).length == 0) {
 
-                    summaryJson.projects.push({
-                        projectId: projectId,
-                        score: project.score,
-                        maxScore: project.maxScore,
-                        passed: project.passed,
-                        failed: project.failed,
-                        dateTime: new Date().toISOString()
-                    });
+                        summaryJson.projects.push({
+                            projectId: projectId,
+                            score: project.score,
+                            maxScore: project.maxScore,
+                            passed: project.passed,
+                            failed: project.failed,
+                            dateTime: new Date().toISOString()
+                        });
+                    }
                 }
             }
 
