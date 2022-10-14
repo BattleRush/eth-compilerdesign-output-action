@@ -343,7 +343,7 @@ try {
                     case 81: // Will be 80 todo
                         projectId = 5;
                         break;
-                    case 100: // Will be 80 todo
+                    case 100:
                         projectId = 6;
                         break;
                     default:
