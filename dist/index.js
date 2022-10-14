@@ -42703,8 +42703,8 @@ try {
                     var name = test.score == test.maxScore ? `**${test.name}**` : test.name;
                     var emoteResult = test.score == test.maxScore ? ':heavy_check_mark:' : ':x:';
 
-                    var passedCount = test.score == test.maxScore ? '**All**' : `${test.passed}`;
-                    var failedCount = test.score == test.maxScore ? '**None**' : `${test.failed}`;
+                    var passedCount = test.failed == 0 ? '**All**' : `${test.passed}`;
+                    var failedCount = test.failed == 0 ? '**None**' : `${test.failed}`;
                     var score = test.hidden ? `?/${test.maxScore}` : `${test.score}/${test.maxScore}`;
 
                     if (test.hidden) {
@@ -42776,7 +42776,7 @@ try {
                     case 81: // Will be 80 todo
                         projectId = 5;
                         break;
-                    case 100: // Will be 80 todo
+                    case 100:
                         projectId = 6;
                         break;
                     default:
