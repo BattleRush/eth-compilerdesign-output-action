@@ -149,10 +149,12 @@ To prevent any build errors, its recommended to not push any build binaries. For
 
 _build
 .gitignore
+output
 
 .vscode
 
 main.native
+main.byte
 ```
 
 # Example output 
