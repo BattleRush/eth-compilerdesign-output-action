@@ -65,8 +65,8 @@ try {
                     continue;
                 }
 
-                if (line.startsWith('Score:')) {
-                    var score = parseInt(line.split(':')[1].split('(')[0].split('/')[0])
+                if (line.startsWith('Score:') && line.indexOf('(given)') > -1) {
+                    var score = parseInt(line.split(':')[1].split('(')[0].split('/')[0]);
                     var maxScore = parseInt(line.split(':')[1].split('(')[0].split('/')[1]);
                     currentProject.score = score;
                     currentProject.maxScore = maxScore;
@@ -98,11 +98,11 @@ try {
                             currentProject.name = "Project 3: Compiling LLVM";
                             currentProject.projectId = 3;
                             break;
-                        case -2:// Will also have 80 differentiate by test names
+                        case 80:
                             currentProject.name = "Project 4: Compiling Oat v.1";
                             currentProject.projectId = 4;
                             break;
-                        case 80:
+                        case 81: // Will be 80
                             currentProject.name = "Project 5: Compiling Full Oat";
                             currentProject.projectId = 5;
                             break;
