@@ -119,6 +119,19 @@ try {
 
                     }
 
+                    // check if current project tests contains a test with the name "subtype unit tests"
+                    // if it does, then we need to set the project name to "Project 5: Compiling Full Oat"
+                    // and set the project id to 5
+                    if (!isInvalidProject) {
+                        for (var k = 0; k < currentProject.tests.length; k++) {
+                            if (currentProject.tests[k].name == "subtype unit tests") {
+                                currentProject.name = "Project 5: Compiling Full Oat";
+                                currentProject.projectId = 5;
+                                break;
+                            }
+                        }
+                    }                  
+
                     projectResults.push(currentProject);
 
                     break;
@@ -353,6 +366,21 @@ try {
                         break;
                     default:
                         projectId = -1;
+                }
+
+                // check if project contains a test with the name "subtype unit tests"
+                var hasSubtypeUnitTests = false;
+                for (var j = 0; j < project.tests.length; j++) {
+                    var test = project.tests[j];
+                    if (test.name == "subtype unit tests") {
+                        hasSubtypeUnitTests = true;
+                        break;
+                    }
+                }
+
+                // If the project has subtype unit tests, then set to project 5
+                if (hasSubtypeUnitTests) {
+                    projectId = 5;
                 }
 
                 if (projectId < 0) {
