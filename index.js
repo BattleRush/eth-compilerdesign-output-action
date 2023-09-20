@@ -7,8 +7,6 @@ const request = require('request');
 try {
     const makeOutputFile = core.getInput('make-output');
     const token = core.getInput('token');
-    const leaderboard = core.getInput('leaderboard');
-    const teamName = core.getInput('teamname');
 
     let makeOutput = "";
 
@@ -322,115 +320,6 @@ try {
 
 
         core.setOutput("markdown", markdown);
-        console.log("Leaderboard: " + leaderboard);
-        // Only report leaderboard if its been set
-        if (leaderboard == "true") {
-
-            console.log("Doing leaderboard");
-
-            var markdownSummary = `# Test Results Summary for: ${teamName}\n\n`;
-            markdownSummary += `| Project | Score | Passed | Failed |\n`;
-            markdownSummary += `| ------- | ----- | ------ | ------ |\n`;
-
-
-            var summaryJson = {
-                teamName: teamName,
-                projects: []
-            };
-
-            for (var i = 0; i < projectResults.length; i++) {
-                var project = projectResults[i];
-                markdownSummary += `| ${project.name} | ${project.score}/${project.maxScore} | ${project.passed} | ${project.failed} |\n`;
-
-                // Project detecting by the amount of max score
-                // TODO make sure this holds for all 6 projects
-                var projectId = -1;
-                switch (project.maxScore) {
-                    case 67:
-                        projectId = 1;
-                        break;
-                    case 46:
-                        projectId = 2;
-                        break;
-                    case 77:
-                        projectId = 3;
-                        break;
-                    case 80:
-                        projectId = 4;
-                        break;
-                    case 81: // Will be 80 todo
-                        projectId = 5;
-                        break;
-                    case 100:
-                        projectId = 6;
-                        break;
-                    default:
-                        projectId = -1;
-                }
-
-                // check if project contains a test with the name "subtype unit tests"
-                var hasSubtypeUnitTests = false;
-                for (var j = 0; j < project.tests.length; j++) {
-                    var test = project.tests[j];
-                    if (test.name == "subtype unit tests") {
-                        hasSubtypeUnitTests = true;
-                        break;
-                    }
-                }
-
-                // If the project has subtype unit tests, then set to project 5
-                if (hasSubtypeUnitTests) {
-                    projectId = 5;
-                }
-
-                if (projectId < 0) {
-                    console.log(`Project ${project.name} has an unknown max score of ${project.maxScore}`);
-                } else {
-                    // Add only if the projectId wasnt added yet
-                    if (summaryJson.projects.filter(p => p.projectId == projectId).length == 0) {
-
-                        summaryJson.projects.push({
-                            projectId: projectId,
-                            score: project.score,
-                            maxScore: project.maxScore,
-                            passed: project.passed,
-                            failed: project.failed,
-                            dateTime: new Date().toISOString()
-                        });
-                    }
-                }
-            }
-
-
-            // Create issue in a specific repository
-            const context = github.context;
-
-            // Print json in collapsable section
-            markdownSummary += `<details><summary>JSON</summary>\n\n`;
-            markdownSummary += `\`\`\`json\n${JSON.stringify(summaryJson, null, 2)}\n\`\`\`\n`;
-            markdownSummary += `</details>\n\n`;
-
-            // Json string
-            var jsonString = JSON.stringify(summaryJson, null, 2);
-            console.log(jsonString);
-
-            // Call web rest api to upload jsonString
-            var url = "https://cdhs22.battlerush.dev/api/test";
-
-            var options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(summaryJson, null, 2)
-            };
-
-            request.post(url, { json: summaryJson }, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log(body);
-                }
-            });
-        }
     });
 
 } catch (error) {
