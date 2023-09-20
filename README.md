@@ -10,15 +10,6 @@ This action parses the output of the make test command and formats it as a GitHu
 `make-output`
 **Required** The path to the output of the make command
 
-Leaderboard options only (If leaderboard is false, then teamname can be set to '')
-Leaderboard is visible here: https://github.com/BattleRush/ETH-CompilerDesignHS22-Leaderboard
-
-`leaderboard`
-**Required** true if you would like to participate with the leaderboard summary, else the report is only local
-
-`teamname`
-**Required** Name which should be shown for your score
-
 ## Outputs
 
 `markdown`
@@ -40,8 +31,6 @@ The formatted markdown to use in the GitHub Action.
     uses: BattleRush/eth-compilerdesign-output-action@main
     with:
         make-output: make.out
-        leaderboard: false
-        teamname: 'YOUR_TEAM_NAME'
 ```
 
 # SETUP
@@ -130,8 +119,6 @@ jobs:
       uses: BattleRush/eth-compilerdesign-output-action@main
       with:
           make-output: make.out
-          leaderboard: true
-          teamname: 'TODO YOUR_TEAM_NAME'
           
     - name: Get the output markdown
       run: echo "${{ steps.outputparser.outputs.markdown }}" >> $GITHUB_STEP_SUMMARY
