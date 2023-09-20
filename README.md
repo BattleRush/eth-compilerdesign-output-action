@@ -55,6 +55,17 @@ $(SUBDIRS):
 .PHONY: all $(SUBDIRS)
 ```
 
+Your folder structure should look like this:
+```
+├─ .github/
+│    ├─ workflows/
+│        | makefile.yml (Content of this file is shown above)
+├─ Project1/ (Each project contains their own Makefile which is called from the main one)
+├─ Project2/ (same)
+├─ Project3/ (same)
+├─ Makefile <- (This file is the global mainfile from above)
+```
+
 # Example makefile.yml
 You can put this in the root folder (.github/workflows) of the project which will then be used to run the action on each push
 
