@@ -59,7 +59,7 @@ Your folder structure should look like this:
 ```
 ├─ .github/
 │    ├─ workflows/
-│        | makefile.yml (Content of this file is shown above)
+│        | makefile.yml (Content of this file is shown bellow in section Example makefile.yml)
 ├─ Project1/ (Each project contains their own Makefile which is called from the main one)
 ├─ Project2/ (same)
 ├─ Project3/ (same)
