@@ -88,7 +88,7 @@ try {
                             currentProject.name = "Project 1: Hellocaml";
                             currentProject.projectId = 1;
                             break;
-                        case 46:
+                        case 51:
                             currentProject.name = "Project 2: x86Lite";
                             currentProject.projectId = 2;
                             break;
